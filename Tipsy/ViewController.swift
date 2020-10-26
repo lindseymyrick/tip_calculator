@@ -17,8 +17,11 @@ class CalculatorViewController: UIViewController {
     @IBOutlet var twentyPctButton: UIButton!
     @IBOutlet var splitNumberLabel: UILabel!
     
+    var billTotal: Double = 0.0
     var selectedTip: Double = 0.10
+    var numberOfPeople = 2
     
+
     @IBAction func tipChanged(_ sender: UIButton) {
         zeroPctButton.isSelected = false
         tenPctButton.isSelected = false
@@ -33,29 +36,32 @@ class CalculatorViewController: UIViewController {
         let buttonTitleAsNumber = Double(buttonTitleMinusPercentSign)!
        
         selectedTip = buttonTitleAsNumber / 100
-//        if sender.titleLabel?.text ==
-//            "0%" {
-//            selectedTip = ".00"
-//            zeroPctButton.isSelected = true
-//            tenPctButton.isSelected = false
-//            twentyPctButton.isSelected = false
-//        } else if sender.titleLabel?.text == "10%" {
-//             selectedTip = ".10"
-//            tenPctButton.isSelected = true
-//            zeroPctButton.isSelected = false
-//            twentyPctButton.isSelected = false
-//        } else if sender.titleLabel?.text == "20%" {
-//             selectedTip = ".20"
-//        twentyPctButton.isSelected = true
-//            tenPctButton.isSelected = false
-//            zeroPctButton.isSelected = false
-//        }
         
     }
     @IBAction func stepperValueChanged(_ sender: UIStepper) {
+//        let splitNumber = String(sender.value).dropLast(2)
+//        splitNumberToDisplay =  String(splitNumber)
+//        splitNumberLabel.text = splitNumberToDisplay
+        
+        splitNumberLabel.text = String(format: "%.0f", sender.value)
+        
+        numberOfPeople = Int(sender.value)
+        
     }
     @IBAction func calculatePressed(_ sender: UIButton) {
+        var bill = billTextField.text!
+        
+        if bill != "" {
+            billTotal = Double(bill)!
+            
+            let result = billTotal * (1 + selectedTip) / Double(numberOfPeople)
+            
+            let resultTo2DecimalPlaces = String(format: "%.2f", result)
+            
+            print(resultTo2DecimalPlaces)
+        }
         print(selectedTip)
+        print(numberOfPeople)
     }
     
     
